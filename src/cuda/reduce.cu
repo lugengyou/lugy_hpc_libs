@@ -2,10 +2,11 @@
  * @Author: lugy lugengyou@github.com
  * @Date: 2024-09-18 15:32:31
  * @FilePath: /lugy_hpc_libs/src/cuda/reduce.cu
- * @LastEditTime: 2024-09-18 17:10:33
+ * @LastEditTime: 2024-09-20 00:12:19
  * @Description: reduce.cu
  */
 #include "reduce.h"
+#include <stdio.h>
 #include <stdint.h>
 #include <cuda_runtime.h>
 
@@ -93,11 +94,11 @@ void lugy::reduce_cuda(int *a, int *b, int n, int version) {
     switch (version)
     {
         case 0:
-            std::cout << "cuda in reduce_kernel_v0." << std::endl;
+            printf("cuda in reduce_kernel_v0.\n");
             reduce_kernel_v0<<<1, blockSize, blockSize * sizeof(int)>>>(d_a, d_b, n);
             break;
         case 1:
-            std::cout << "cuda in reduce_kernel_v1." << std::endl;
+            printf("cuda in reduce_kernel_v1.\n");
             reduce_kernel_v1<<<1, blockSize, blockSize * sizeof(int)>>>(d_a, d_b, n);
             break;
 
