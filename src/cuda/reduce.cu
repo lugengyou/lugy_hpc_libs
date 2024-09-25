@@ -2,7 +2,7 @@
  * @Author: lugy lugengyou@github.com
  * @Date: 2024-09-18 15:32:31
  * @FilePath: /lugy_hpc_libs/src/cuda/reduce.cu
- * @LastEditTime: 2024-09-20 10:10:24
+ * @LastEditTime: 2024-09-25 22:38:45
  * @Description: reduce.cu
  */
 #include "reduce.h"
@@ -16,7 +16,7 @@
  * @return {*}
  */
 __global__ static void reduce_kernel_v0(int *d_a, int *d_b, int n) {
-    __shared__ int sdata[256];
+    extern __shared__ int sdata[];
 
     const uint32_t tid = threadIdx.x;
     
@@ -49,7 +49,7 @@ __global__ static void reduce_kernel_v0(int *d_a, int *d_b, int n) {
  * @return {*}
  */
 __global__ static void reduce_kernel_v1(int *d_a, int *d_b, int n) {
-    __shared__ int sdata[256];
+    extern __shared__ int sdata[];
 
     const uint32_t tid = threadIdx.x;
     
