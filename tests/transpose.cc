@@ -2,7 +2,7 @@
  * @Author: lugy lugengyou@github.com
  * @Date: 2024-09-23 23:33:10
  * @FilePath: /lugy_hpc_libs/tests/transpose.cc
- * @LastEditTime: 2024-09-24 00:26:17
+ * @LastEditTime: 2024-10-22 19:55:59
  * @Description: transpose test sample
  */
 #include "transpose.h"
@@ -42,7 +42,7 @@ int main() {
     }
 
     // call the transpose function of cuda
-    lugy::transpose_cuda(a, b_cuda, n, m, 0);
+    lugy::transpose_cuda(a, b_cuda, n, m, 1);
     std::cout << "b_cuda: " << std::endl;
     for (int i = 0; i < 5; ++i) {
         for (int j = 0; j < 5; ++j) {
