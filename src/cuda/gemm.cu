@@ -2,7 +2,7 @@
  * @Author: lugy lugengyou@github.com
  * @Date: 2024-09-20 09:43:39
  * @FilePath: /lugy_hpc_libs/src/cuda/gemm.cu
- * @LastEditTime: 2024-09-20 11:06:46
+ * @LastEditTime: 2024-11-04 16:34:01
  * @Description: gemm.cu
  */
 #include "gemm.h"
@@ -39,14 +39,14 @@ __global__ static void gemm_cuda_v1(int *d_a, int *d_b, int *d_c, int N, int M, 
     const int tidc = threadIdx.x;
     const int tidr = threadIdx.y;
 
-    const int bidc = blockIdx.x;
-    const int bidr = blockIdx.y;
+    const int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    const int idy = blockIdx.y * blockDim.y + threadIdx.y;
 
     int sum = 0;
     // 加载数据到共享内存
     for (int i = 0; i < K; i += 16) {
-        sdataA[tidr][tidc] = d_a[(bidr * 16 + tidr) * K + i + tidc];
-        sdataB[tidr][tidc] = d_b[(i + tidr) * M + bidc * 16 + tidc];
+        sdataA[tidr][tidc] = d_a[idy * K + i + tidc];
+        sdataB[tidr][tidc] = d_b[(i + tidr) * M + idx];
         __syncthreads();
 
         // 计算        
@@ -56,8 +56,8 @@ __global__ static void gemm_cuda_v1(int *d_a, int *d_b, int *d_c, int N, int M, 
         __syncthreads();
     }
 
-    if (bidr * 16 + tidr < N && bidc * 16 + tidc < M) {
-        d_c[(bidr * 16 + tidr) * M + bidc * 16 + tidc] = sum;
+    if (idy < N && idx < M) {
+        d_c[idy * M + idx] = sum;
     }   
 }
 

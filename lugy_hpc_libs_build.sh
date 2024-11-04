@@ -3,7 +3,7 @@
  # @Author: lugy lugengyou@github.com
  # @Date: 2024-09-18 15:16:04
  # @FilePath: /lugy_hpc_libs/lugy_hpc_libs_build.sh
- # @LastEditTime: 2024-10-22 19:56:10
+ # @LastEditTime: 2024-11-04 16:34:18
  # @Description: lugy_hpc_libs 库编译脚本
 ### 
 
@@ -21,7 +21,7 @@ cmake ..
 make
 
 # ./reduce
-# ./gemm
-./transpose
+./gemm
+# ./transpose
 
 
